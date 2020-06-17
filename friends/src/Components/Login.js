@@ -1,9 +1,12 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import {axiosWithAuth} from '../AxiosAuth'
+import {withRouter} from 'react-router-dom'
 
-const initialState = {username: '', password: ''}
+const initialState = {username: 'Lambda School', password: 'i<3Lambd4'}
 
 const Login = (props) => {
+    
     const [state, setState] = useState(initialState)
 
     const handleLoginChange = e => {
@@ -15,32 +18,37 @@ const Login = (props) => {
     const login = e => {
         e.preventDefault()
         // Make a post request and send the credentials object to the API
-
-        axios.post('http://locahost:5000/api/login', state.credentials)
+        axiosWithAuth()
+        .post('http://localhost:5000/api/login', state)
         .then(res => {
-            console.log(res)
+            // get token and set to local storage
+            window.localStorage.setItem('token', res.data.payload)
+            props.history.push('/protected')
         })
         .catch(err => {
             console.log("Your post did not work")
+           
         })
+        
+            
     }
 
     return (
         <div>
             <form onSubmit={login}>
                 <input 
-                value= {state.credentials.username}
+                value= {state.username}
                 name='username'
                 placeholder='UserName'
                 onChange={handleLoginChange}/>
 
                 <input
-                value={state.credentials.password}
+                value={state.password}
                 name='password'
                 placeholder='Password'
                 onChange={handleLoginChange}/>
 
-                <button>Login</button>
+                <button type='submit'>Login</button>
             </form>
         </div>
     )
