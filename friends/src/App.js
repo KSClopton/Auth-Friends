@@ -7,6 +7,8 @@ import styled from 'styled-components'
 import SignedInNav from './Components/SignedInNav'
 import FriendsList from './Components/FriendsList'
 import {withRouter} from 'react-router-dom'
+
+
 const initialFormValues = {email: '', password: ''}
 
 function App() {
@@ -37,7 +39,8 @@ function App() {
           <Link to='/'>
             <Route path='/login' component={Login}/>
           </Link>
-          <PrivateRoute path='/protected'/>
+          {/* <PrivateRoute path='/protected'/> */}
+          <Route path='protected'/>
             <SignedInNav />
             <FriendsList />
         </Switch>

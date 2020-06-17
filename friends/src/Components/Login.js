@@ -23,7 +23,7 @@ const Login = (props) => {
         .then(res => {
             // get token and set to local storage
             window.localStorage.setItem('token', res.data.payload)
-            props.history.push('/protected')
+            props.histogitry.push('/protected')
         })
         .catch(err => {
             console.log("Your post did not work")
